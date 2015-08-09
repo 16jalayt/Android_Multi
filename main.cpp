@@ -7,6 +7,7 @@ bool exitProgram = false;
 /* TO DO
 loading screen in console and main window
 debug (logging?)
+Screen Lables?
 
 */
 /*
@@ -15,6 +16,9 @@ Callback reference
     6x Trouble menu
     7x Reference menu
     8x Tutorial menu
+    2xx Trouble sub menus
+    3xx Reference sub menus
+    4xx Tutorials sub menus
 */
 int main(int argc, char** argv)
 {
@@ -90,6 +94,28 @@ int main(int argc, char** argv)
     //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
     loadButton(tutBack, 320, 100, 240, 470, "Back", 35, 84, true);
 
+//Troubleshoot connect menu
+    Button::Ptr troubleConCom(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(troubleConCom, 320, 100, 240, 175, "To Computer", 35, 202, true);
+
+    //Button::Ptr troubleConP2P(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    //loadButton(troubleConP2P, 320, 100, 240, 320, "Won't move", 35, 63, true);
+
+    Button::Ptr troubleConBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(troubleConBack, 320, 100, 240, 470, "Back", 35, 201, true);
+
+//Troubleshoot Computer Connect List
+    Panel::Ptr troubleConComPanel(gui);
+    loadPanel(troubleConComPanel, 750, 500, 0, 0, 200, 200, 200, true);
+
+    Scrollbar::Ptr troubleConComScroll(gui);
+    //                Bar name name,     Panel name      sizex,sizey,amount,low ,High,start hidden
+    loadScrollBar(troubleConComScroll, troubleConComPanel, 50, 500,     30, 500, 500, true);
+
+
     checkConsoleClose();
 
 
@@ -148,9 +174,11 @@ int main(int argc, char** argv)
 
 //Troubleshoot
             case 62://Connect clicked
-                troubleConnect->show();
-                troubleMove->show();
-                troubleBackMain->show();
+                troubleConBack->show();
+                troubleConCom->show();
+                troubleConnect->hide();
+                troubleMove->hide();
+                troubleBackMain->hide();
                 break;
 
             case 63://Move clicked
@@ -236,6 +264,39 @@ int main(int argc, char** argv)
                 mainExit->show();
                 break;
 
+//Troubleshoot connect menu
+            case 201://Back clicked
+                troubleConBack->hide();
+                troubleConCom->hide();
+                troubleConnect->show();
+                troubleMove->show();
+                troubleBackMain->show();
+                break;
+
+            case 202://Computer clicked
+                troubleConComPanel->show();
+                troubleConComScroll->show();
+                troubleConnect->hide();
+                troubleMove->hide();
+                troubleConBack->hide();
+                break;
+
+            //case 221://Back clicked
+                //troubleConBack->hide();
+                //troubleConCom->hide();
+                //troubleConnect->show();
+                //troubleMove->show();
+                //troubleBackMain->show();
+                //break;
+
+//troubleshoot connect computer panel
+            case 221://back clicked
+                troubleConComPanel->hide();
+                troubleConComScroll->hide();
+                troubleConBack->show();
+                troubleConCom->show();
+
+
             }
             //check for exit status, because return dosn't work in a switch statement.
             //for an if statement with one line, you dont need parenthesis. :P
@@ -255,12 +316,12 @@ int main(int argc, char** argv)
     }
 }
 
-void scrollPanel(tgui::Panel::Ptr panel_trouble_sam, const tgui::Callback& callback)
+void scrollPanel(tgui::Panel::Ptr panelname, const tgui::Callback& callback)
 {
     int distanceToMove = previousScrolbarValue - callback.value;
 
     // Move all widgets that are inside the panel
-    for (auto& widget : panel_trouble_sam->getWidgets())
+    for (auto& widget : panelname->getWidgets())
         widget->setPosition(widget->getPosition().x, widget->getPosition().y + distanceToMove);
 
     previousScrolbarValue = callback.value;
@@ -278,4 +339,62 @@ void loadButton(Button::Ptr buttonname, int sizeX, int sizeY, int posX, int posY
     buttonname->setTextSize(textSize);
     if (hide == true)
         buttonname->hide();
+}
+
+void loadPanel(Panel::Ptr panelname, int sizeX, int sizeY, int posX, int posY, int colR, int colG, int colB, bool hide)
+{
+
+    panelname->setSize(sizeX, sizeY);
+    panelname->setPosition(posX, posY);
+    panelname->setBackgroundColor(sf::Color(colR, colG, colB));
+    if (hide == true)
+        panelname->hide();
+}
+
+void loadLabel(Label::Ptr labelname, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide)
+{
+
+    labelname->load("data/Black.conf");
+    labelname->setPosition(posX, posY);
+    labelname->setText(text);
+    labelname->setTextSize(textSize);
+    labelname->setTextColor(sf::Color(colR, colG, colB));
+    if (hide == true)
+        labelname->hide();
+}
+
+void loadCheckbox(Checkbox::Ptr checkname, int sizeX, int sizeY, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide)
+{
+    checkname->load("data/Black.conf");
+    checkname->setSize(sizeX, sizeY);
+    checkname->setPosition(posX, posY);
+    checkname->setText(text);
+    checkname->setTextSize(textSize);
+    checkname->setTextColor(sf::Color(colR, colG, colB));
+    if (hide == true)
+        checkname->hide();
+}
+
+void loadText(sf::Text textname, Font &font, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide)
+{
+    textname.setFont(font);
+    textname.setPosition(posX, posY);
+    textname.setString(text);
+    textname.setColor(sf::Color(colR, colG, colB));
+    textname.setCharacterSize(textSize);
+    //if (hide == true)
+        //textname->hide();
+}
+
+void loadScrollBar(Scrollbar::Ptr scrollname, Panel::Ptr panelname, int sizeX, int sizeY,int scrollAmount, int lowValue, int maxValue, bool hide)
+{
+    scrollname->load("data/Black.conf");
+    scrollname->setSize(sizeX, sizeY);
+    scrollname->setPosition(panelname->getPosition() + sf::Vector2f(panelname->getSize().x, 0));
+    scrollname->setArrowScrollAmount(30);
+    scrollname->setLowValue(500); // Viewable area (height of the panel)
+    scrollname->setMaximum(500); // Total area (height of the 5 images)
+	scrollname->bindCallbackEx(std::bind(scrollPanel, panelname, std::placeholders::_1), tgui::Scrollbar::ValueChanged);
+    if (hide == true)
+        scrollname->hide();
 }

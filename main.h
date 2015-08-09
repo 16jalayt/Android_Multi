@@ -13,15 +13,11 @@ using namespace tgui;
 
 
 void loadButton(Button::Ptr buttonname, int sizeX, int sizeY, int posX, int posY, string text, int textSize, int callbackID, bool hide);
+void loadPanel(Panel::Ptr panelname, int sizeX, int sizeY, int posX, int posY, int colR, int colG, int colB, bool hide);
+void loadLabel(Label::Ptr labelname, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide);
+void loadCheckbox(Checkbox::Ptr checkname, int sizeX, int sizeY, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide);
+void loadText(sf::Text textname, Font &font, int posX, int posY, string text, int textSize, int colR, int colG, int colB, bool hide);
+void loadScrollBar(Scrollbar::Ptr scrollname, Panel::Ptr panelname, int sizeX, int sizeY,int scrollAmount, int lowValue, int maxValue, bool hide);
 
-
-/*
-void scrollPanel(tgui::Panel::Ptr panel_trouble_sam, const tgui::Callback& callback);
-class main
-{
-  public:
-        sf::RenderWindow window;
-        Gui gui();
-};*/
 #endif // MAIN_H_INCLUDED
 
