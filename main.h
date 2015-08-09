@@ -12,6 +12,9 @@ using namespace sf;
 using namespace tgui;
 
 
+void loadButton(Button::Ptr buttonname, int sizeX, int sizeY, int posX, int posY, string text, int textSize, int callbackID, bool hide);
+
+
 /*
 void scrollPanel(tgui::Panel::Ptr panel_trouble_sam, const tgui::Callback& callback);
 class main
