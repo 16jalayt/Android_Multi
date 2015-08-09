@@ -6,6 +6,8 @@
 
 using namespace std;
 
-void cmdparse(int argc, char** argv, bool &hideconsole);
+void cmdparse(int argc, char** argv);
+void checkConsoleClose();
+
 
 #endif

@@ -3,11 +3,10 @@
 int tut_var_setup_page = 0;
 int tut_var_trouble_page = 0;
 int previousScrolbarValue = 0;
-bool hideconsole = true;
 bool exitProgram = false;
 /* TO DO
 loading screen in console and main window
-debug
+debug (logging?)
 
 */
 /*
@@ -15,10 +14,11 @@ Callback reference
     5x Main menu
     6x Trouble menu
     7x Reference menu
+    8x Tutorial menu
 */
 int main(int argc, char** argv)
 {
-    cmdparse(argc, argv, hideconsole);
+    cmdparse(argc, argv);
     RenderWindow window(sf::VideoMode(800, 600), "Marion Robotics");
     Gui gui(window);
     gui.setGlobalFont("data/DejaVuSans.ttf");
@@ -56,6 +56,42 @@ int main(int argc, char** argv)
     //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
     loadButton(troubleBackMain, 320, 100, 240, 470, "Back", 35, 64, true);
 
+//Reference menu
+    Button::Ptr refCode(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refCode, 320, 100, 240, 35, "Code", 35, 71, true);
+
+    Button::Ptr refHardware(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refHardware, 320, 100, 240, 175, "Hardware", 35, 72, true);
+
+    Button::Ptr refPrinting(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refPrinting, 320, 100, 240, 320, "3D Printing", 35, 73, true);
+
+    Button::Ptr refBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refBack, 320, 100, 240, 470, "Back", 35, 74, true);
+
+//Tutorial menu
+    Button::Ptr tutCode(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(tutCode, 320, 100, 240, 35, "Code", 35, 81, true);
+
+    Button::Ptr tutHardware(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(tutHardware, 320, 100, 240, 175, "Hardware", 35, 82, true);
+
+    Button::Ptr tutPrinting(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(tutPrinting, 320, 100, 240, 320, "3D Printing", 35, 83, true);
+
+    Button::Ptr tutBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(tutBack, 320, 100, 240, 470, "Back", 35, 84, true);
+
+    checkConsoleClose();
+
 
     while (window.isOpen())
     {
@@ -73,7 +109,8 @@ int main(int argc, char** argv)
         {
             switch (callback.id)
             {
-            case 51:
+//Main
+            case 51://Troubleshoot clicked
                 troubleConnect->show();
                 troubleMove->show();
                 troubleBackMain->show();
@@ -83,44 +120,116 @@ int main(int argc, char** argv)
                 mainExit->hide();
                 break;
 
-            case 52:
+            case 52://Reference Clicked
+                refCode->show();
+                refHardware->show();
+                refPrinting->show();
+                refBack->show();
                 mainTroubleshoot->hide();
                 mainReference->hide();
                 mainTutorials->hide();
                 mainExit->hide();
                 break;
 
-            case 53:
+            case 53://Tutorials Clicked
+                tutCode->show();
+                tutHardware->show();
+                tutPrinting->show();
+                tutBack->show();
                 mainTroubleshoot->hide();
                 mainReference->hide();
                 mainTutorials->hide();
                 mainExit->hide();
                 break;
 
-            case 54:
+            case 54://Exit Clicked
                 exitProgram = true;
                 break;
 
-            case 62:
-                //tut_button_menu_samtutorial->show();
-                //tut_button_menu_back->show();
-                mainTroubleshoot->hide();
-                mainReference->hide();
-                mainTutorials->hide();
-                mainExit->hide();
+//Troubleshoot
+            case 62://Connect clicked
+                troubleConnect->show();
+                troubleMove->show();
+                troubleBackMain->show();
                 break;
 
-            case 63:
-                mainTroubleshoot->hide();
-                mainReference->hide();
-                mainTutorials->hide();
-                mainExit->hide();
-                break;
-
-            case 64:
+            case 63://Move clicked
                 troubleConnect->hide();
                 troubleMove->hide();
                 troubleBackMain->hide();
+                break;
+
+            case 64://Back clicked
+                troubleConnect->hide();
+                troubleMove->hide();
+                troubleBackMain->hide();
+                mainTroubleshoot->show();
+                mainReference->show();
+                mainTutorials->show();
+                mainExit->show();
+                break;
+//Reference
+
+            case 71://Code clicked
+                refCode->hide();
+                refHardware->hide();
+                refPrinting->hide();
+                refBack->hide();
+                break;
+
+            case 72://Hardware Clicked
+                refCode->hide();
+                refHardware->hide();
+                refPrinting->hide();
+                refBack->hide();
+                break;
+
+            case 73://Printing Clicked
+                refCode->hide();
+                refHardware->hide();
+                refPrinting->hide();
+                refBack->hide();
+                break;
+
+            case 74://Back Clicked
+                refCode->hide();
+                refHardware->hide();
+                refPrinting->hide();
+                refBack->hide();
+                mainTroubleshoot->show();
+                mainReference->show();
+                mainTutorials->show();
+                mainExit->show();
+                break;
+
+//Tutorials
+            case 81://Code clicked
+                tutCode->hide();
+                tutHardware->hide();
+                tutPrinting->hide();
+                tutBack->hide();
+                break;
+
+            case 82://Hardware Clicked
+                tutCode->hide();
+                tutHardware->hide();
+                tutPrinting->hide();
+                tutBack->hide();
+                break;
+
+            case 83://Printing Clicked
+                tutCode->hide();
+                tutHardware->hide();
+                tutPrinting->hide();
+                tutBack->hide();
+
+                break;
+
+            case 84://Back Clicked
+                tutCode->hide();
+                tutHardware->hide();
+                tutPrinting->hide();
+                tutBack->hide();
                 mainTroubleshoot->show();
                 mainReference->show();
                 mainTutorials->show();
@@ -167,4 +276,6 @@ void loadButton(Button::Ptr buttonname, int sizeX, int sizeY, int posX, int posY
     buttonname->bindCallback(Button::LeftMouseClicked);
     buttonname->setCallbackId(callbackID);
     buttonname->setTextSize(textSize);
+    if (hide == true)
+        buttonname->hide();
 }

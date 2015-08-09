@@ -1,5 +1,7 @@
 #include "arg.h"
-void cmdparse(int argc, char** argv, bool &hideconsole)
+bool hideconsole = true;
+
+void cmdparse(int argc, char** argv)
 {
 if (argc != 1)
     {
@@ -17,9 +19,15 @@ if (argc != 1)
             exit(1);
         }
     }
-    else
+else
     {
         hideconsole = true;
-        ShowWindow( GetConsoleWindow(), SW_HIDE );
+
     }
+}
+
+void checkConsoleClose()
+{
+    if (hideconsole)
+        ShowWindow( GetConsoleWindow(), SW_HIDE );
 }
