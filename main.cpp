@@ -1,14 +1,21 @@
 #include "main.h"
+#include "arg.h"
 
 int tut_var_setup_page = 0;
 int tut_var_trouble_page = 0;
 int previousScrolbarValue = 0;
 bool exitProgram = false;
+bool confError = false;
+sf::Thread crashThread(&fatalError);
+bool killProgram = false;
+
+bool refCodeText1Visible = false;
+
 /* TO DO
 loading screen in console and main window
 debug (logging?)
 Screen Lables?
-
+figure out the loading thread
 */
 /*
 Callback reference
@@ -44,7 +51,7 @@ int main(int argc, char** argv)
     loadButton(mainTutorials, 320, 100, 240, 320, "Tutorials", 35, 53, false);
 
     Button::Ptr mainExit(gui);
-    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    //         button name,loading sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
     loadButton(mainExit, 320, 100, 240, 470, "Exit", 35, 54, false);
 
 //Troubleshoot menu
@@ -76,6 +83,28 @@ int main(int argc, char** argv)
     Button::Ptr refBack(gui);
     //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
     loadButton(refBack, 320, 100, 240, 470, "Back", 35, 74, true);
+
+//Code reference
+    Panel::Ptr refCodePanel(gui);
+    loadPanel(refCodePanel, 750, 500, 0, 0, 200, 200, 200, true);
+
+    Scrollbar::Ptr refCodeScroll(gui);
+    //                Bar name name,     Panel name      sizex,sizey,amount,low ,High,start hidden
+    loadScrollBar(refCodeScroll, refCodePanel, 50, 500,     30, 500, 500, true);
+
+    Button::Ptr refCodeBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refCodeBack, 200, 50, 300, 520, "Back", 25, 321, true);
+
+    sf::Text refCodeText1;
+    refCodeText1.setFont(font);
+    refCodeText1.setString("This will guide you through the connection of \nthe Samantha module to the WiFi.");
+    refCodeText1.setCharacterSize(20);
+    refCodeText1.setColor(Color::White);
+    refCodeText1.setPosition(Vector2f(15, 30));
+    //loadText()
+
+
 
 //Tutorial menu
     Button::Ptr tutCode(gui);
@@ -115,8 +144,30 @@ int main(int argc, char** argv)
     //                Bar name name,     Panel name      sizex,sizey,amount,low ,High,start hidden
     loadScrollBar(troubleConComScroll, troubleConComPanel, 50, 500,     30, 500, 500, true);
 
+    Button::Ptr troubleConComBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(troubleConComBack, 200, 50, 300, 520, "Back", 25, 221, true);
 
-    checkConsoleClose();
+    tgui::Label::Ptr conComLabel1(*troubleConComPanel);
+    conComLabel1->load("data/Black.conf");
+    conComLabel1->setText("There is a power problem. Try a fresh battery and checking wires");
+    conComLabel1->setTextSize(20);
+    conComLabel1->setTextColor(Color::Red);
+    conComLabel1->setPosition(Vector2f(20, 15));
+
+	tgui::Checkbox::Ptr conComLabel2(*troubleConComPanel);
+    conComLabel2->load("data/Black.conf");
+    conComLabel2->setPosition(20, 50);
+    conComLabel2->setText("Is a good battery in, the brick and the\nmain switch is turned on.");
+    conComLabel2->setSize(32, 32);
+    conComLabel2->setTextColor(sf::Color::Black);
+
+
+
+
+    isLoading = false;
+    if (isLoading == false)
+        checkConsoleClose();
 
 
     while (window.isOpen())
@@ -199,6 +250,12 @@ int main(int argc, char** argv)
 //Reference
 
             case 71://Code clicked
+                refCodePanel->show();
+                refCodeScroll->show();
+                refCodeBack->show();
+                //refCodeText1->show();
+                //window.draw(refCodeText1);
+                refCodeText1Visible = true;
                 refCode->hide();
                 refHardware->hide();
                 refPrinting->hide();
@@ -228,6 +285,19 @@ int main(int argc, char** argv)
                 mainReference->show();
                 mainTutorials->show();
                 mainExit->show();
+                break;
+
+//Ref sub
+            case 321://Back Clicked
+                refCodePanel->hide();
+                refCodeScroll->hide();
+                refCodeBack->hide();
+                //refCodeText1->hide();
+                refCodeText1Visible = false;
+                refCode->show();
+                refHardware->show();
+                refPrinting->show();
+                refBack->show();
                 break;
 
 //Tutorials
@@ -276,6 +346,7 @@ int main(int argc, char** argv)
             case 202://Computer clicked
                 troubleConComPanel->show();
                 troubleConComScroll->show();
+                troubleConComBack->show();
                 troubleConnect->hide();
                 troubleMove->hide();
                 troubleConBack->hide();
@@ -293,6 +364,7 @@ int main(int argc, char** argv)
             case 221://back clicked
                 troubleConComPanel->hide();
                 troubleConComScroll->hide();
+                troubleConComBack->hide();
                 troubleConBack->show();
                 troubleConCom->show();
 
@@ -308,6 +380,9 @@ int main(int argc, char** argv)
         window.clear(sf::Color(0, 250, 0));
 
         gui.draw();
+//text must be rendered here.
+        if(refCodeText1Visible == true)
+            window.draw(refCodeText1);
 
 
         window.display();
@@ -329,8 +404,12 @@ void scrollPanel(tgui::Panel::Ptr panelname, const tgui::Callback& callback)
 
 void loadButton(Button::Ptr buttonname, int sizeX, int sizeY, int posX, int posY, string text, int textSize, int callbackID, bool hide)
 {
-
-    buttonname->load("data/Black.conf");
+    if (!buttonname->load("data/Black.conf"))
+    {
+        confError = true;
+        crashThread.launch();
+    }
+    //buttonname->load("data/Black.conf");
     buttonname->setSize(sizeX, sizeY);
     buttonname->setPosition(posX, posY);
     buttonname->setText(text);
@@ -397,4 +476,36 @@ void loadScrollBar(Scrollbar::Ptr scrollname, Panel::Ptr panelname, int sizeX, i
 	scrollname->bindCallbackEx(std::bind(scrollPanel, panelname, std::placeholders::_1), tgui::Scrollbar::ValueChanged);
     if (hide == true)
         scrollname->hide();
+}
+
+void fatalError()
+{
+        isLoading = false;
+        killLoad();
+        //loadingTextThread.terminate();
+        Sleep(300);
+        //IRL you should try to avoid system. It is resource intensive.
+        //system("CLS");
+        //replacement pasts in 100 \n which means new line
+        cout << string( 100, '\n' );
+        if (confError == true)
+        {
+         cout << "\nBlack.conf not found! Please re-download.\n";
+         //confError == false;
+        }
+        else
+        {
+        cout << "\nGeneric Fatal Error\n";
+        }
+        //system("PAUSE");
+        cout << "Press Enter to continue...";
+        //paste in some more new lines to compensate and boost the text up on screen
+        cout << string( 10, '\n' );
+        cin.get();
+
+        //exitProgram = true;
+        //abort();
+        return;
+
+        //window.close();
 }

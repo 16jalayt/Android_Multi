@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1439151258 source:e:\projects\android_multi\main.cpp
+1441821822 source:e:\projects\android_multi\main.cpp
 	"main.h"
+	"arg.h"
 
-1439150530 e:\projects\android_multi\main.h
+1441221152 e:\projects\android_multi\main.h
 	<SFML/Graphics.hpp>
 	<TGUI/TGUI.hpp>
 	<iostream>
+	<stdlib.h>
 	"arg.h"
 
 1424118578 e:\sfml-2.2\include\sfml\graphics.hpp
@@ -531,12 +533,13 @@
 	<TGUI/Container.hpp>
 	<TGUI/Gui.hpp>
 
-1439140100 source:e:\projects\android_multi\arg.cpp
+1441380888 source:e:\projects\android_multi\arg.cpp
 	"arg.h"
 
-1439140128 e:\projects\android_multi\arg.h
+1441380888 e:\projects\android_multi\arg.h
 	<windows.h>
 	<iostream>
+	<SFML/System.hpp>
 
 1434463682 e:\projects\android_multi\objects.h
 	<windows.h>
