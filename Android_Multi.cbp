@@ -34,10 +34,24 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="ErrorHandling.cpp" />
+		<Unit filename="ErrorHandling.h" />
+		<Unit filename="Menu_Main.cpp" />
+		<Unit filename="Menu_Main.h" />
+		<Unit filename="Menu_Reference.cpp" />
+		<Unit filename="Menu_Reference.h" />
+		<Unit filename="Menu_Trouble.cpp" />
+		<Unit filename="Menu_Trouble.h" />
+		<Unit filename="Menu_Tutorials.cpp" />
+		<Unit filename="Menu_Tutorials.h" />
+		<Unit filename="ObjectCreateFunc.cpp" />
+		<Unit filename="ObjectCreateFunc.h" />
+		<Unit filename="ThreadHandling.cpp" />
+		<Unit filename="ThreadHandling.h" />
 		<Unit filename="arg.cpp" />
 		<Unit filename="arg.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="main.h" />
+		<Unit filename="src/Objects/ObjectCreateFunc.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

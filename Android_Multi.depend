@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1441821822 source:e:\projects\android_multi\main.cpp
-	"main.h"
-	"arg.h"
-
-1441221152 e:\projects\android_multi\main.h
+1443024422 source:e:\projects\android_multi\main.cpp
 	<SFML/Graphics.hpp>
-	<TGUI/TGUI.hpp>
 	<iostream>
-	<stdlib.h>
+	"arg.h"
+	"Menu_Main.h"
+
+1442504326 e:\projects\android_multi\main.h
+	<SFML/Graphics.hpp>
+	<iostream>
 	"arg.h"
 
 1424118578 e:\sfml-2.2\include\sfml\graphics.hpp
@@ -533,13 +533,16 @@
 	<TGUI/Container.hpp>
 	<TGUI/Gui.hpp>
 
-1441380888 source:e:\projects\android_multi\arg.cpp
+1442600066 source:e:\projects\android_multi\arg.cpp
 	"arg.h"
 
-1441380888 e:\projects\android_multi\arg.h
+1442507490 e:\projects\android_multi\arg.h
 	<windows.h>
 	<iostream>
-	<SFML/System.hpp>
+	<stdlib.h>
+	<TGUI/TGUI.hpp>
+	"ErrorHandling.h"
+	"ThreadHandling.h"
 
 1434463682 e:\projects\android_multi\objects.h
 	<windows.h>
@@ -1122,4 +1125,67 @@
 	<cassert>
 	<TGUI/Container.hpp>
 	<TGUI/Gui.hpp>
+
+1443024632 source:e:\projects\android_multi\menu_main.cpp
+	"Menu_Main.h"
+
+1442431070 e:\projects\android_multi\src\objects\objectcreatefunc.h
+	"../../arg.h"
+
+1442431236 source:e:\projects\android_multi\src\objects\objectcreatefunc.cpp
+	"ObjectCreateFunc.h"
+
+1443023832 source:e:\projects\android_multi\objectcreatefunc.cpp
+	"ObjectCreateFunc.h"
+
+1443023274 e:\projects\android_multi\objectcreatefunc.h
+	<TGUI/TGUI.hpp>
+
+1442599314 e:\projects\android_multi\errorhandling.h
+	<TGUI/TGUI.hpp>
+	"ObjectCreateFunc.h"
+	"ThreadHandling.h"
+	<windows.h>
+
+1442591592 e:\projects\android_multi\threadhandling.h
+	<TGUI/TGUI.hpp>
+	<iostream>
+	<windows.h>
+
+1442599314 source:e:\projects\android_multi\errorhandling.cpp
+	"ErrorHandling.h"
+
+1442940202 e:\projects\android_multi\menu_main.h
+	<TGUI/TGUI.hpp>
+	"ObjectCreateFunc.h"
+	"Menu_Trouble.h"
+	"Menu_Reference.h"
+	"Menu_Tutorials.h"
+
+1442599944 source:e:\projects\android_multi\threadhandling.cpp
+	"ThreadHandling.h"
+
+1443024422 source:e:\projects\android_multi\menu_reference.cpp
+	"Menu_Reference.h"
+
+1442949084 e:\projects\android_multi\menu_reference.h
+	<TGUI/TGUI.hpp>
+	"ObjectCreateFunc.h"
+	"Menu_Main.h"
+
+1443027114 source:e:\projects\android_multi\menu_trouble.cpp
+	"Menu_Trouble.h"
+
+1443025922 e:\projects\android_multi\menu_trouble.h
+	<TGUI/TGUI.hpp>
+	"ObjectCreateFunc.h"
+	"Menu_Main.h"
+
+1442940284 e:\projects\android_multi\menu_tutorials.h
+	<TGUI/TGUI.hpp>
+	"ObjectCreateFunc.h"
+	"Menu_Main.h"
+
+1442940346 source:e:\projects\android_multi\menu_tutorials.cpp
+	"Menu_Tutorials.h"
 

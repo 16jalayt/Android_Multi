@@ -3,17 +3,19 @@
 #define _WIN32_WINNT 0x0502
 #include <windows.h>
 #include <iostream>
-#include <SFML/System.hpp>
+#include <stdlib.h>
+#include <TGUI/TGUI.hpp>
+#include "ErrorHandling.h"
+#include "ThreadHandling.h"
 
 using namespace std;
 using namespace sf;
+using namespace tgui;
 
 void cmdparse(int argc, char** argv);
 void checkConsoleClose();
-void loading();
-void killLoad();
 
-extern bool isLoading;
+
 //bool isLoading;
 
 
