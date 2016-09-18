@@ -1,7 +1,6 @@
 #include "Menu_Reference.h"
 
 
-//https://tgui.eu/example-code/v0.6/scrollable-panel/
 namespace Ref {
 
    static Button::Ptr m_refCode;
@@ -13,6 +12,11 @@ namespace Ref {
    static Button::Ptr m_refCodeBack;
    static Scrollbar::Ptr m_refCodeScroll;
    static Label::Ptr m_refCodeText;
+
+   static Panel::Ptr m_refHardPanel;
+   static Button::Ptr m_refHardBack;
+   static Scrollbar::Ptr m_refHardScroll;
+   static Label::Ptr m_refHardText;
 
 void menuInit(Gui& gui)
 {
@@ -63,6 +67,32 @@ void menuInit(Gui& gui)
 	m_refCodeBack = refCodeBack;
 	m_refCodeScroll = refCodeScroll;
 	m_refCodeText = refCodeText;
+
+//Hardware reference
+    Panel::Ptr refHardPanel(gui);
+    loadPanel(refHardPanel, 750, 500, 0, 0, 200, 200, 200, true);
+
+    Button::Ptr refHardBack(gui);
+    //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
+    loadButton(refHardBack, 200, 50, 300, 520, "Back", 25, 331, true);
+
+    Label::Ptr refHardText(*refHardPanel);
+    loadLabel(refHardText, 15, 30, 20, 1, 1, 1, true, "this is not a long test that has\n completely arbitrary text\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol");
+
+    tgui::Scrollbar::Ptr refHardScroll(gui);
+    refHardScroll->load("data/Black.conf");
+    refHardScroll->setSize(30, 500);
+    refHardScroll->setPosition(refHardPanel->getPosition() + sf::Vector2f(refHardPanel->getSize().x, 0));
+    refHardScroll->setArrowScrollAmount(30);
+    refHardScroll->setLowValue(100); // Viewable area (height of the panel)
+    refHardScroll->setMaximum(500); // Total area (height of the 5 images)
+    refHardScroll->bindCallbackEx(std::bind(scrollPanel, refHardPanel, std::placeholders::_1), tgui::Scrollbar::ValueChanged);
+    refHardScroll->hide();
+
+    m_refHardPanel = refHardPanel;
+	m_refHardBack = refHardBack;
+	m_refHardScroll = refHardScroll;
+	m_refHardText = refHardText;
 }
 
 Button::Ptr getRefCode( void )
@@ -85,6 +115,7 @@ Button::Ptr getRefBack( void )
 	return m_refBack;
 }
 
+//code
 Panel::Ptr getRefCodePanel( void )
 {
 	return m_refCodePanel;
@@ -105,6 +136,28 @@ Label::Ptr getRefCodeText( void )
 	return m_refCodeText;
 }
 
+//Hard
+Panel::Ptr getRefHardPanel( void )
+{
+	return m_refHardPanel;
+}
+
+Button::Ptr getRefHardBack( void )
+{
+	return m_refHardBack;
+}
+
+Scrollbar::Ptr getRefHardScroll( void )
+{
+	return m_refHardScroll;
+}
+
+Label::Ptr getRefHardText( void )
+{
+	return m_refHardText;
+}
+
+
 void callbacks(Gui& gui, Callback& callback)
 {
 
@@ -117,9 +170,6 @@ void callbacks(Gui& gui, Callback& callback)
                 Ref::getRefCodeScroll()->show();
                 Ref::getRefCodeBack()->show();
                 Ref::getRefCodeText()->show();
-                //refCodeText1->show();
-                //window.draw(refCodeText1);
-                //refCodeText1Visible = true;
                 Ref::getRefCode()->hide();
                 Ref::getRefHardware()->hide();
                 Ref::getRefPrinting()->hide();
@@ -127,6 +177,10 @@ void callbacks(Gui& gui, Callback& callback)
                 break;
 
             case 72://Hardware Clicked
+                Ref::getRefHardPanel()->show();
+                Ref::getRefHardScroll()->show();
+                Ref::getRefHardBack()->show();
+                Ref::getRefHardText()->show();
                 Ref::getRefCode()->hide();
                 Ref::getRefHardware()->hide();
                 Ref::getRefPrinting()->hide();
@@ -155,9 +209,19 @@ void callbacks(Gui& gui, Callback& callback)
                 Ref::getRefCodePanel()->hide();
                 Ref::getRefCodeScroll()->hide();
                 Ref::getRefCodeBack()->hide();
-                Ref::getRefCodeText()->hide();
-                //refCodeText1->hide();
-                //refCodeText1Visible = false;
+                //Ref::getRefCodeText()->hide();
+                Ref::getRefCode()->show();
+                Ref::getRefHardware()->show();
+                Ref::getRefPrinting()->show();
+                Ref::getRefBack()->show();
+                break;
+
+    //Ref sub
+            case 331://Back Clicked
+                Ref::getRefHardPanel()->hide();
+                Ref::getRefHardScroll()->hide();
+                Ref::getRefHardBack()->hide();
+                Ref::getRefHardText()->hide();
                 Ref::getRefCode()->show();
                 Ref::getRefHardware()->show();
                 Ref::getRefPrinting()->show();

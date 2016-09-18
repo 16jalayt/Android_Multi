@@ -20,7 +20,7 @@ namespace Tro
 
     Button::Ptr getTroubleConCom( void );
    Button::Ptr getTroubleConBack( void );
-   Button::Ptr getTroubleConP2P( void );
+   Button::Ptr getTroubleConP2p( void );
 
    Panel::Ptr getTroubleConComPanel( void );
    Button::Ptr getTroubleConComBack( void );

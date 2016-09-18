@@ -23,5 +23,10 @@ namespace Ref
     Button::Ptr getRefCodeBack( void );
     Scrollbar::Ptr getRefCodeScroll( void );
     Label::Ptr getRefCodeText( void );
+
+    Panel::Ptr getRefHardPanel( void );
+    Button::Ptr getRefHardBack( void );
+    Scrollbar::Ptr getRefHardScroll( void );
+    Label::Ptr getRefHardText( void );
 }
 #endif // MENU_MAIN_H_INCLUDED

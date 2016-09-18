@@ -60,7 +60,7 @@ void menuInit(Gui& gui)
 
     Scrollbar::Ptr troubleConComScroll(gui);
     //                Bar name name,     Panel name      sizex,sizey,amount,low ,High,start hidden
-    loadScrollBar(troubleConComScroll, troubleConComPanel, 50, 500,     30, 500, 500, true);
+    loadScrollBar(troubleConComScroll, troubleConComPanel, 30, 500,     30, 100, 500, true);
 
     Button::Ptr troubleConComBack(gui);
     //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
@@ -68,7 +68,7 @@ void menuInit(Gui& gui)
 
     tgui::Label::Ptr conComLabel1(*troubleConComPanel);
     conComLabel1->load("data/Black.conf");
-    conComLabel1->setText("There is a power problem. Try a fresh battery and checking wires");
+    conComLabel1->setText("Check that everything is turned on and pluged in.");
     conComLabel1->setTextSize(20);
     conComLabel1->setTextColor(Color::Red);
     conComLabel1->setPosition(Vector2f(20, 15));
@@ -76,7 +76,7 @@ void menuInit(Gui& gui)
 	tgui::Checkbox::Ptr conComLabel2(*troubleConComPanel);
     conComLabel2->load("data/Black.conf");
     conComLabel2->setPosition(20, 50);
-    conComLabel2->setText("  Is a good battery in, the brick and the\n  main switch is turned on.");
+    conComLabel2->setText("  Is a good battery in, the brick and the\n  main switch is turned on.\nthis is a long test that has\n completely arbitrary text\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol\nlol");
     conComLabel2->setSize(32, 32);
     conComLabel2->setTextColor(sf::Color::Black);
 
@@ -91,7 +91,7 @@ Panel::Ptr troubleConP2pPanel(gui);
 
     Scrollbar::Ptr troubleConP2pScroll(gui);
     //                Bar name name,     Panel name      sizex,sizey,amount,low ,High,start hidden
-    loadScrollBar(troubleConP2pScroll, troubleConComPanel, 50, 500,     30, 500, 500, true);
+    loadScrollBar(troubleConP2pScroll, troubleConP2pPanel, 30, 500,     30, 100, 500, true);
 
     Button::Ptr troubleConP2pBack(gui);
     //         button name, sizex,sizey,posx,posy,button text ,textsize,callbackid,start hidden
@@ -99,7 +99,7 @@ Panel::Ptr troubleConP2pPanel(gui);
 
     tgui::Label::Ptr conP2pLabel1(*troubleConP2pPanel);
     conComLabel1->load("data/Black.conf");
-    conComLabel1->setText("There is a power problem. Try a fresh battery and checking wires");
+    conComLabel1->setText("Make sure the phones are paired");
     conComLabel1->setTextSize(20);
     conComLabel1->setTextColor(Color::Red);
     conComLabel1->setPosition(Vector2f(20, 15));
@@ -164,6 +164,21 @@ Scrollbar::Ptr getTroubleConComScroll( void )
 	return m_troubleConComScroll;
 }
 
+Panel::Ptr getTroubleConP2pPanel( void )
+{
+	return m_troubleConP2pPanel;
+}
+
+Button::Ptr getTroubleConP2pBack( void )
+{
+	return m_troubleConP2pBack;
+}
+
+Scrollbar::Ptr getTroubleConP2pScroll( void )
+{
+	return m_troubleConP2pScroll;
+}
+
 void callbacks(Gui& gui, Callback& callback)
 {
             switch (callback.id)
@@ -215,9 +230,9 @@ void callbacks(Gui& gui, Callback& callback)
                 break;
 
             case 203://p2p clicked
-                Tro::getTroubleConComPanel()->show();
-                Tro::getTroubleConComScroll()->show();
-                Tro::getTroubleConComBack()->show();
+                Tro::getTroubleConP2pPanel()->show();
+                Tro::getTroubleConP2pScroll()->show();
+                Tro::getTroubleConP2pBack()->show();
                 Tro::getTroubleConnect()->hide();
                 Tro::getTroubleMove()->hide();
                 Tro::getTroubleConBack()->hide();
@@ -234,9 +249,9 @@ void callbacks(Gui& gui, Callback& callback)
 
     //troubleshoot connect p2p panel
             case 231://back clicked
-                //Tro::getTroubleConP2pPanel()->hide();
-                //Tro::getTroubleConP2pScroll()->hide();
-                //Tro::getTroubleConP2pBack()->hide();
+                Tro::getTroubleConP2pPanel()->hide();
+                Tro::getTroubleConP2pScroll()->hide();
+                Tro::getTroubleConP2pBack()->hide();
                 Tro::getTroubleConBack()->show();
                 Tro::getTroubleConP2p()->show();
 
